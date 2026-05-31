@@ -41,6 +41,8 @@ logs/
 # Databases
 database/*.db
 database/*.sqlite3
+database/*.db-shm
+database/*.db-wal
 
 # OS generated files
 .DS_Store

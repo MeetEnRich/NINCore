@@ -21,6 +21,7 @@ import sqlite3
 import hashlib
 import secrets
 import random
+import bcrypt
 from datetime import date, timedelta
 
 import pandas as pd
@@ -77,9 +78,12 @@ def random_linkage_date() -> str:
     return (date.today() - timedelta(days=days_ago)).isoformat()
 
 
-def generate_api_key() -> str:
-    """Generate a secure 32-byte hex API key."""
-    return secrets.token_hex(32)
+def generate_api_key_and_hash() -> tuple[str, str]:
+    """Generate a secure 32-byte hex secret and its bcrypt hash."""
+    secret = secrets.token_hex(32)
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(secret.encode('utf-8'), salt).decode('utf-8')
+    return secret, hashed
 
 
 # -- Seeders ----------------------------------------------------------
@@ -169,14 +173,15 @@ def seed_api_keys(cursor) -> None:
     print("\nSeeding API_Keys...")
 
     for agency in SECTOR_AGENCIES:
-        api_key = generate_api_key()
+        secret, hashed = generate_api_key_and_hash()
+        full_client_key = f"{agency['Agency_ID']}:{secret}"
         cursor.execute(
             """INSERT OR IGNORE INTO API_Keys
                (Agency_ID, Sector_Name, API_Key, Status)
                VALUES (?, ?, ?, 'Active')""",
-            (agency["Agency_ID"], agency["Sector_Name"], api_key),
+            (agency["Agency_ID"], agency["Sector_Name"], hashed),
         )
-        print(f"  [{agency['Sector_Name']:12}]  {agency['Agency_ID']}  ->  {api_key}")
+        print(f"  [{agency['Sector_Name']:12}]  ->  {full_client_key}")
 
     print(f"  API_Keys seeded.")
 

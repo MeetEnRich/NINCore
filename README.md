@@ -14,8 +14,8 @@ This system bridges the gap between fragmented identity databases (Banking, Heal
 ##  Architecture
 
 NINCore consists of three main decoupled layers:
-1. **Machine Learning Risk Engine (`models/`)**: A pre-trained Random Forest model that evaluates 20 distinct demographic, sectoral, and behavioral features to detect anomalies.
-2. **REST API (`api/`)**: A FastAPI-based service that securely exposes endpoints for real-time identity verification, risk scoring, and audit logging.
+1. **Machine Learning Risk Engine (`models/`)**: A pre-trained Random Forest model that evaluates 18 distinct demographic, sectoral, and behavioral features to detect anomalies. The complex data preparation is handled by a dedicated `FeatureStore` service.
+2. **REST API (`api/`)**: A FastAPI-based service using asynchronous `BackgroundTasks` for non-blocking logging. It securely exposes endpoints for real-time identity verification, risk scoring, and audit logging.
 3. **Governance Dashboard (`dashboard/`)**: A Streamlit application that allows administrators to visualize national identity risk trends, monitor real-time API logs, and investigate flagged high-risk profiles.
 
 ---
@@ -34,11 +34,13 @@ NINCore/
 ├── models/               # ML models and inference logic
 │   └── saved/            # Serialized models (.pkl)
 ├── notebooks/            # Jupyter notebooks for exploratory data analysis (EDA) and model training
-├── scripts/              # Utility scripts (Dataset generation, DB setup)
+├── scripts/              # Utility scripts (Dataset generation, DB setup, CLI tools)
+│   └── manage_api_keys.py# Interactive CLI for generating and revoking bcrypt API keys
 ├── tests/                # Unit and integration tests
 ├── .env.example          # Example environment variables
 ├── run_api.py            # Entry point for the FastAPI server
 ├── run_dashboard.py      # Entry point for the Streamlit dashboard
+├── run_all.py            # Master script to run both API and Dashboard concurrently
 └── requirements.txt      # Project dependencies
 ```
 
@@ -81,19 +83,19 @@ python scripts/generate_dataset.py
 
 ### 4. Running the System
 
-You will need two separate terminal windows/tabs to run the API and Dashboard simultaneously.
+You can run the entire system (FastAPI backend + Streamlit dashboard) with a single command:
 
-**Terminal 1: Start the FastAPI Backend**
 ```bash
-python run_api.py
-# The API will be available at: http://localhost:8000
-# API Documentation (Swagger UI): http://localhost:8000/docs
+python run_all.py
 ```
+* The API will be available at: http://localhost:8000
+* API Documentation (Swagger UI): http://localhost:8000/docs
+* The Dashboard will open automatically at: http://localhost:8501
 
-**Terminal 2: Start the Streamlit Dashboard**
+### 5. Managing API Keys (CLI)
+NINCore uses cryptographically secure `bcrypt` hashes for API authentication. To generate a new `AgencyID:Secret` key pair for a sector, or to revoke an old one, use the interactive terminal script:
 ```bash
-python run_dashboard.py
-# The dashboard will open automatically in your browser at: http://localhost:8501
+python scripts/manage_api_keys.py
 ```
 
 ---
@@ -107,6 +109,10 @@ The system uses a Random Forest algorithm trained on a highly engineered synthet
 
 ##  Security & Privacy
 NINCore is designed with a Privacy-by-Design approach. It implements an interoperable linkage layer that connects disparate sector records without physically merging the sensitive databases, adhering to the principles of the Nigeria Data Protection Act (NDPA 2023).
+
+Additionally, the system implements:
+* **Cryptographic API Authentication**: All agency API keys are hashed using `bcrypt` to prevent full-table scan vulnerabilities and protect secrets even in the event of a database breach.
+* **Non-Blocking Telemetry**: Using native `BackgroundTasks`, audit logs are written asynchronously to ensure lightning-fast API responses for critical verification requests.
 
 ---
 

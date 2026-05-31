@@ -35,6 +35,8 @@ logger = logging.getLogger(__name__)
 API_KEY_HEADER = APIKeyHeader(name="X-API-Key", auto_error=False)
 
 
+import bcrypt
+
 def get_verified_agency(
     api_key: str = Security(API_KEY_HEADER),
     db: Session = Depends(get_db),
@@ -43,8 +45,8 @@ def get_verified_agency(
     FastAPI dependency. Validates X-API-Key header.
 
     Raises:
-        401 — header missing
-        403 — key not found or revoked
+        401 — header missing or malformed
+        403 — key not found, revoked, or incorrect secret
 
     Returns:
         APIKey ORM object for the authenticated agency
@@ -57,10 +59,36 @@ def get_verified_agency(
                    "All NINCore API endpoints require authentication.",
         )
 
-    key_record = crud.apikey.get_by_key(db, api_key=api_key)
+    # Expecting AgencyID:Secret format
+    parts = api_key.split(":", 1)
+    if len(parts) != 2:
+        logger.warning("Malformed API key format attempted.")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid API key format. Expected format is AgencyID:Secret",
+        )
+    
+    agency_id, secret = parts
+    
+    # Fast O(1) lookup by Agency_ID
+    key_record = crud.apikey.get_by_agency(db, agency_id=agency_id)
 
-    if not key_record:
-        logger.warning("Invalid or revoked API key attempted: %s...", api_key[:8])
+    if not key_record or key_record.Status != "Active":
+        logger.warning("Agency ID not found or revoked: %s", agency_id)
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Invalid or revoked API key. "
+                   "Contact the NINCore administrator.",
+        )
+
+    # Secure verification
+    try:
+        is_valid = bcrypt.checkpw(secret.encode('utf-8'), key_record.API_Key.encode('utf-8'))
+    except ValueError:
+        is_valid = False
+
+    if not is_valid:
+        logger.warning("Invalid API key secret attempted for agency: %s", agency_id)
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Invalid or revoked API key. "
@@ -68,7 +96,7 @@ def get_verified_agency(
         )
 
     # Stamp last used timestamp
-    crud.apikey.update_last_used(db, api_key=api_key)
+    crud.apikey.update_last_used(db, api_key=key_record.API_Key)
     db.commit()
 
     logger.info(
