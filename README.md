@@ -38,9 +38,8 @@ NINCore/
 │   └── manage_api_keys.py# Interactive CLI for generating and revoking bcrypt API keys
 ├── tests/                # Unit and integration tests
 ├── .env.example          # Example environment variables
-├── run_api.py            # Entry point for the FastAPI server
-├── run_dashboard.py      # Entry point for the Streamlit dashboard
-├── run_all.py            # Master script to run both API and Dashboard concurrently
+├── run.bat               # Windows batch file to run API and Dashboard
+├── setup.bat             # Windows batch file for one-click installation
 └── requirements.txt      # Project dependencies
 ```
 
@@ -52,41 +51,24 @@ NINCore/
 - Python 3.10+
 - Git
 
-### 2. Installation
-Clone the repository and install the required dependencies:
+### 2. One-Click Setup (Windows)
+Clone the repository and run the setup script. This will automatically create the virtual environment, install dependencies, initialize the SQLite database, and generate the 50,000 synthetic records:
 
 ```bash
 git clone https://github.com/MeetEnRich/NINCore.git
 cd NINCore
 
-# Create and activate a virtual environment
-python -m venv venv
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
+# Double-click setup.bat or run it from the terminal:
+setup.bat
 ```
 
-### 3. Database Setup & Data Generation
-Initialize the SQLite database schema and generate the synthetic demographic dataset.
+### 3. Running the System
+
+You can run the entire system (FastAPI backend + Streamlit dashboard) with a single click:
 
 ```bash
-# Setup the SQLite Database
-python scripts/setup_database.py
-
-# Generate 50,000 synthetic NIN records
-python scripts/generate_dataset.py
-```
-
-### 4. Running the System
-
-You can run the entire system (FastAPI backend + Streamlit dashboard) with a single command:
-
-```bash
-python run_all.py
+# Double-click run.bat or run it from the terminal:
+run.bat
 ```
 * The API will be available at: http://localhost:8000
 * API Documentation (Swagger UI): http://localhost:8000/docs
