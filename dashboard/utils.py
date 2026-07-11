@@ -31,7 +31,7 @@ def setup_page(page_title: str) -> Optional[str]:
             background-color: #0f1923;
         }
         [data-testid="stSidebar"] * {
-            color: #e0e0e0 !important;
+            !important;
         }
 
         /* Main background */
@@ -59,7 +59,6 @@ def setup_page(page_title: str) -> Optional[str]:
         .kpi-value {
             font-size: 2.1rem;
             font-weight: 700;
-            color: #e8f4fd;
             line-height: 1.1;
         }
         .kpi-sub {
@@ -90,7 +89,6 @@ def setup_page(page_title: str) -> Optional[str]:
         .section-header {
             font-size: 0.72rem;
             font-weight: 600;
-            color: #7f8c8d;
             text-transform: uppercase;
             letter-spacing: 0.12em;
             border-bottom: 1px solid #2d4057;
@@ -101,7 +99,7 @@ def setup_page(page_title: str) -> Optional[str]:
         /* Tables */
         .dataframe thead th {
             background-color: #1a2332 !important;
-            color: #aabbcc !important;
+            !important;
             font-size: 0.78rem !important;
         }
         .dataframe tbody td {
@@ -120,11 +118,10 @@ def setup_page(page_title: str) -> Optional[str]:
         st.markdown("""
         <div style='text-align:center; padding: 1rem 0 1.5rem 0;'>
             <div style='font-size:1.5rem; font-weight:800;
-                        color:#4fc3f7; letter-spacing:0.05em;'>
+                        letter-spacing:0.05em;'>
                 NINCORE
             </div>
-            <div style='font-size:0.7rem; color:#607d8b;
-                        text-transform:uppercase; letter-spacing:0.1em;'>
+            <div style='font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em;'>
                 Identity Governance Platform
             </div>
         </div>
@@ -133,7 +130,7 @@ def setup_page(page_title: str) -> Optional[str]:
 
         # API Key Input
         st.markdown(
-            "<div style='font-size:0.72rem; color:#607d8b; "
+            "<div style='font-size:0.72rem; "
             "text-transform:uppercase; letter-spacing:0.08em; "
             "margin-bottom:0.3rem;'>API Authentication</div>",
             unsafe_allow_html=True,
@@ -170,11 +167,11 @@ def setup_page(page_title: str) -> Optional[str]:
         
         st.markdown("---")
         st.markdown("""
-        <div style='font-size:0.68rem; color:#455a64; padding: 0.5rem 0;'>
-            <b style='color:#546e7a;'>NINCore v1.0.0</b><br>
+        <div style='font-size:0.68rem; padding: 0.5rem 0;'>
+            <b style=''>NINCore v1.0.0</b><br>
             Federal University of Lafia<br>
             Stefan Habila Musa &nbsp;|&nbsp; 2026<br><br>
-            API: <span style='color:#4fc3f7;'>localhost:8000</span>
+            API: <span style=''>localhost:8000</span>
         </div>
         """, unsafe_allow_html=True)
 

@@ -24,9 +24,9 @@ SECTORS = ["Banking", "Health", "Education", "Transport", "Telecoms"]
 
 
 st.markdown(
-    "<h2 style='color:#e8f4fd; font-weight:700; "
+    "<h2 style='font-weight:700; "
     "margin-bottom:0.2rem;'>Administration</h2>"
-    "<p style='color:#607d8b; font-size:0.85rem; "
+    "<p style='font-size:0.85rem; "
     "margin-bottom:1.5rem;'>System health, API key registry, "
     "citizen lookup, and sector revocation controls.</p>",
     unsafe_allow_html=True,
@@ -89,8 +89,8 @@ with tab1:
             st.markdown(f"""
             <div style='background:#1a2332; border:1px solid #2d4057;
                         border-radius:8px; padding:1rem 1.5rem;
-                        font-size:0.82rem; color:#aabbcc;'>
-                <b style='color:#4fc3f7;'>Health check completed</b>
+                        font-size:0.82rem; '>
+                <b style=''>Health check completed</b>
                 &nbsp;|&nbsp;
                 {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC
             </div>
@@ -135,7 +135,7 @@ with tab2:
         active  = (df["Status"] == "Active").sum()
         revoked = (df["Status"] == "Revoked").sum()
         st.markdown(
-            f"<p style='color:#607d8b; font-size:0.78rem; "
+            f"<p style='font-size:0.78rem; "
             f"margin-top:0.5rem;'>"
             f"Active keys: <b style='color:#1e8449'>{active}</b>"
             f"&nbsp;&nbsp;Revoked keys: "
@@ -190,9 +190,9 @@ with tab3:
                             f"justify-content:space-between;"
                             f"padding:0.35rem 0; "
                             f"border-bottom:1px solid #1a2332;'>"
-                            f"<span style='color:#7f8c8d; "
+                            f"<span style='"
                             f"font-size:0.82rem;'>{k}</span>"
-                            f"<span style='color:#e8f4fd; "
+                            f"<span style='"
                             f"font-size:0.82rem; "
                             f"font-weight:600;'>{v}</span></div>",
                             unsafe_allow_html=True,

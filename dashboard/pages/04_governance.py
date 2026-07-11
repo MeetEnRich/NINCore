@@ -31,9 +31,9 @@ ACTION_COLORS = {
 
 
 st.markdown(
-    "<h2 style='color:#e8f4fd; font-weight:700; "
+    "<h2 style='font-weight:700; "
     "margin-bottom:0.2rem;'>Governance Trail</h2>"
-    "<p style='color:#607d8b; font-size:0.85rem; "
+    "<p style='font-size:0.85rem; "
     "margin-bottom:1.5rem;'>Tamper-evident audit log of all "
     "system actions, agency access events, and administrative "
     "operations. Append-only in compliance with NDPA 2023.</p>",

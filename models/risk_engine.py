@@ -25,11 +25,11 @@ import pandas as pd
 
 logger = logging.getLogger(__name__)
 
-# ── Path resolution ───────────────────────────────────────────────────
+# ── Path resolution 
 _THIS_DIR  = Path(os.path.dirname(os.path.abspath(__file__)))
 MODEL_PATH = _THIS_DIR / "saved" / "risk_engine.pkl"
 
-# ── Feature order must exactly match training (notebook 02, Cell 2) ──
+# ── Feature order must exactly match training (notebook 02, Cell 2)
 FEATURE_COLUMNS = [
     "Age",
     "State_of_Origin",

@@ -39,9 +39,9 @@ SECTOR_LINK_COUNTS = {
 
 
 st.markdown(
-    "<h2 style='color:#e8f4fd; font-weight:700; "
+    "<h2 style='font-weight:700; "
     "margin-bottom:0.2rem;'>Sector Analysis</h2>"
-    "<p style='color:#607d8b; font-size:0.85rem; "
+    "<p style='font-size:0.85rem; "
     "margin-bottom:1.5rem;'>NIN linkage distribution and "
     "cross-sector identity coverage across all five regulated sectors.</p>",
     unsafe_allow_html=True,

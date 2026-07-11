@@ -72,9 +72,9 @@ def render_gauge(risk_score: float) -> go.Figure:
 
 
 st.markdown(
-    "<h2 style='color:#e8f4fd; font-weight:700; "
+    "<h2 style='font-weight:700; "
     "margin-bottom:0.2rem;'>Risk Assessment</h2>"
-    "<p style='color:#607d8b; font-size:0.85rem; "
+    "<p style='font-size:0.85rem; "
     "margin-bottom:1.5rem;'>Submit a NIN for real-time "
     "ML-powered identity risk evaluation.</p>",
     unsafe_allow_html=True,
@@ -164,8 +164,7 @@ if submitted:
                     color:{verdict_color};'>
             {verdict_label}
         </div>
-        <div style='font-size:0.85rem; color:#aabbcc;
-                    margin-top:0.4rem;'>
+        <div style='font-size:0.85rem; margin-top:0.4rem;'>
             {result["Message"]}
         </div>
     </div>
@@ -196,8 +195,8 @@ if submitted:
             st.markdown(
                 f"<div style='display:flex; justify-content:space-between;"
                 f"padding:0.35rem 0; border-bottom:1px solid #1a2332;'>"
-                f"<span style='color:#7f8c8d; font-size:0.82rem;'>{k}</span>"
-                f"<span style='color:#e8f4fd; font-size:0.82rem;"
+                f"<span style='font-size:0.82rem;'>{k}</span>"
+                f"<span style='font-size:0.82rem;"
                 f"font-weight:600;'>{v}</span></div>",
                 unsafe_allow_html=True,
             )

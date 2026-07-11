@@ -23,9 +23,9 @@ API_BASE = "http://localhost:8000/api/v1"
 api_key = setup_page("System Overview")
 
 st.markdown(
-    "<h2 style='color:#e8f4fd; font-weight:700; "
+    "<h2 style='font-weight:700; "
     "margin-bottom:0.2rem;'>System Overview</h2>"
-    "<p style='color:#607d8b; font-size:0.85rem; "
+    "<p style='font-size:0.85rem; "
     "margin-bottom:1.5rem;'>Real-time platform health and "
     "identity risk intelligence across all sectors.</p>",
     unsafe_allow_html=True,
@@ -162,7 +162,7 @@ else:
 
 # ── Footer timestamp ──────────────────────────────────────────────
 st.markdown(
-    f"<p style='color:#455a64; font-size:0.72rem; "
+    f"<p style='font-size:0.72rem; "
     f"margin-top:2rem;'>Last refreshed: "
     f"{datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC &nbsp;|&nbsp; "
     f"NINCore v1.0.0</p>",
