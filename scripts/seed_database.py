@@ -93,9 +93,15 @@ def seed_citizen_registry(cursor, df: pd.DataFrame) -> None:
     records = []
     for _, row in df.iterrows():
         nin        = int(row["NIN"])
-        full_name  = fake.name()
-        age        = int(row["Age"])
         gender     = row["Gender"]
+        
+        # Ensure name matches the assigned gender
+        if gender == "M":
+            full_name = fake.name_male()
+        else:
+            full_name = fake.name_female()
+            
+        age        = int(row["Age"])
 
         # Derive DOB from age (approximate)
         birth_year = date.today().year - age

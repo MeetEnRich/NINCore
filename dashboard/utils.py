@@ -26,14 +26,6 @@ def setup_page(page_title: str) -> Optional[str]:
     # Global CSS
     st.markdown("""
     <style>
-        /* Sidebar */
-        [data-testid="stSidebar"] {
-            background-color: #0f1923;
-        }
-        [data-testid="stSidebar"] * {
-            !important;
-        }
-
         /* Main background */
         .main .block-container {
             padding-top: 1.5rem;
@@ -43,15 +35,16 @@ def setup_page(page_title: str) -> Optional[str]:
 
         /* KPI cards */
         .kpi-card {
-            background: linear-gradient(135deg, #1a2332 0%, #243447 100%);
-            border: 1px solid #2d4057;
+            background-color: var(--secondary-background-color);
+            border: 1px solid var(--faded-text-10);
             border-radius: 10px;
             padding: 1.2rem 1.5rem;
             text-align: center;
         }
         .kpi-label {
             font-size: 0.78rem;
-            color: #8899aa;
+            color: var(--text-color);
+            opacity: 0.7;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-bottom: 0.4rem;
@@ -60,10 +53,12 @@ def setup_page(page_title: str) -> Optional[str]:
             font-size: 2.1rem;
             font-weight: 700;
             line-height: 1.1;
+            color: var(--text-color);
         }
         .kpi-sub {
             font-size: 0.75rem;
-            color: #6688aa;
+            color: var(--text-color);
+            opacity: 0.5;
             margin-top: 0.3rem;
         }
 
@@ -91,15 +86,13 @@ def setup_page(page_title: str) -> Optional[str]:
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-            border-bottom: 1px solid #2d4057;
+            border-bottom: 1px solid var(--faded-text-10);
             padding-bottom: 0.4rem;
             margin-bottom: 1rem;
         }
 
         /* Tables */
         .dataframe thead th {
-            background-color: #1a2332 !important;
-            !important;
             font-size: 0.78rem !important;
         }
         .dataframe tbody td {
